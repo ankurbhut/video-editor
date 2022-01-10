@@ -39,6 +39,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.video_editor.OptiTrimmerActivity
 import com.video_editor.OptiVideoEditor
 import com.video_editor.R
+import com.video_editor.VideoEditorActivity.Companion.VIDEO_RESULT_URL
 import com.video_editor.adapter.OptiVideoOptionsAdapter
 import com.video_editor.adapter.VideoPreviewAdapter
 import com.video_editor.interfaces.OptiFFMpegCallback
@@ -112,7 +113,8 @@ class OptiMasterProcessorFragment : androidx.fragment.app.Fragment(),
 
         tvInfo = rootView?.findViewById(R.id.tvInfo)
 
-        preferences = requireActivity().getSharedPreferences("fetch_permission", Context.MODE_PRIVATE)
+        preferences =
+            requireActivity().getSharedPreferences("fetch_permission", Context.MODE_PRIVATE)
 
         rvVideoOptions = rootView?.findViewById(R.id.rvVideoOptions)!!
         linearLayoutManager =
@@ -205,9 +207,13 @@ class OptiMasterProcessorFragment : androidx.fragment.app.Fragment(),
                     if (masterVideoFile != null) {
                         val outputFile = createSaveVideoFile()
                         OptiCommonMethods.copyFile(masterVideoFile, outputFile)
-                        Toast.makeText(context, R.string.successfully_saved, Toast.LENGTH_SHORT)
-                            .show()
+//                        Toast.makeText(context, R.string.successfully_saved, Toast.LENGTH_SHORT)
+//                            .show()
                         OptiUtils.refreshGallery(outputFile.absolutePath, requireContext())
+                        val i = Intent()
+                        i.putExtra(VIDEO_RESULT_URL, outputFile.absolutePath)
+                        activity?.setResult(RESULT_OK, i)
+                        activity?.finish()
                     }
                 }
                 .setNegativeButton(R.string.cancel) { dialog, which -> }
@@ -531,7 +537,8 @@ class OptiMasterProcessorFragment : androidx.fragment.app.Fragment(),
                     if (resultCode == RESULT_OK) {
                         masterVideoFile = OptiCommonMethods.writeIntoFile(activity, data, videoFile)
 
-                        val timeInMillis = OptiUtils.getVideoDuration(requireContext(), masterVideoFile!!)
+                        val timeInMillis =
+                            OptiUtils.getVideoDuration(requireContext(), masterVideoFile!!)
                         Log.v(tagName, "timeInMillis: $timeInMillis")
                         val duration = OptiCommonMethods.convertDurationInMin(timeInMillis)
                         Log.v(tagName, "videoDuration: $duration")
@@ -610,7 +617,8 @@ class OptiMasterProcessorFragment : androidx.fragment.app.Fragment(),
                         val extension =
                             OptiCommonMethods.getFileExtension(masterVideoFile!!.absolutePath)
 
-                        val timeInMillis = OptiUtils.getVideoDuration(requireContext(), masterVideoFile!!)
+                        val timeInMillis =
+                            OptiUtils.getVideoDuration(requireContext(), masterVideoFile!!)
                         Log.v(tagName, "timeInMillis: $timeInMillis")
                         val duration = OptiCommonMethods.convertDurationInMin(timeInMillis)
                         Log.v(tagName, "videoDuration: $duration")

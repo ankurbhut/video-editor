@@ -19,7 +19,7 @@
         android:allowBackup="false">
 
         <!--MainActivity-->
-        <activity android:name="com.video_editor.MainScreen"
+        <activity android:name="com.video_editor.VideoEditorActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
             android:exported="true">

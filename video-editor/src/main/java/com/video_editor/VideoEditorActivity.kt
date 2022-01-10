@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.video_editor.fragments.OptiMasterProcessorFragment
 
-class MainScreen : AppCompatActivity() {
+class VideoEditorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,5 +14,10 @@ class MainScreen : AppCompatActivity() {
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.container, OptiMasterProcessorFragment()).commit()
+    }
+
+
+    companion object {
+        const val VIDEO_RESULT_URL = "video_result_url"
     }
 }
